@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: plernoapi
+  name: plernoapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: plernoapi
+  template:
+    metadata:
+      labels:
+        app: plernoapi
+    spec:
+      containers:
+        - name: plerno-api
+          image: plerno-api:1.0
+          imagePullPolicy: Never
+          env:
+            - name: MONGO_HOST
+              value: "mongodb"
+            - name: MONGO_PORT
+              value: "27017"
+            - name: USER_SERVICE_URL
+              value: "http://authapp:8000"
+          ports:
+            - containerPort: 8080

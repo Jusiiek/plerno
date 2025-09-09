@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: authapp
+  name: authapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: authapp
+  template:
+    metadata:
+      labels:
+        app: authapp
+    spec:
+      containers:
+        - name: auth-app
+          image: auth-app:1.0
+          imagePullPolicy: Never
+          env:
+            - name: MONGO_URI
+              value: "mongodb://mongodb:27017"
+            - name: HOST
+              value: "0.0.0.0"
+          ports:
+            - containerPort: 8000
